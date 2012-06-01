@@ -27,14 +27,16 @@ class knpMarkdownPluginConfiguration extends sfPluginConfiguration
    */
   public function listenToRoutingLoadConfigurationEvent(sfEvent $event)
   {
-    $event->getSubject()->prependRoute( 'knp_markdown_preview', new sfRoute(
-        '/markdown/preview',
-        array('module' => 'knpMarkdown', 'action' => 'preview'),
-        array(),
-        array()
-      ) );
+    if (sfConfig::get('knp_markdown_preview')) {
+      $event->getSubject()->prependRoute( 'knp_markdown_preview', new sfRoute(
+          '/markdown/preview',
+          array('module' => 'knpMarkdown', 'action' => 'preview'),
+          array(),
+          array()
+        ) );
 
-    sfWidgetFormMarkdown::setRouting( $event->getSubject() );
+      sfWidgetFormMarkdown::setRouting( $event->getSubject() );
+    }
   }
 
 }
